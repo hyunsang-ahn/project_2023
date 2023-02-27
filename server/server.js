@@ -35,19 +35,23 @@ const http = require('http');
 
 const app = express()
 const db = require('./db.js'); // db 불러오기
+const session = require('express-session'); // 세션 설정
+const passport = require('passport'); // 여기와
+const passportConfig = require('./passport'); // 여기
+const route = require('./route.js');
 
 app.set('port', process.env.PORT || 30022);
-
+app.use(session({ secret: '비밀코드', resave: true, saveUninitialized: false })); // 세션 활성화
+app.use(passport.initialize()); // passport 구동
+app.use(passport.session()); // 세션 연결
 //서버 생성
-http.createServer(app).listen(app.get('port'), function(){
-    console.log('Express server listening on port ' + app.get('port'));
+http.createServer(app).listen(app.get('port'), function () {
+  console.log('Express server listening on port ' + app.get('port'));
 });
 db(); // 실행
-app.get('/api', (req, res) => {
 
-  console.log('salfj;asldjf;lasd')
-  res.send('Hello World expr123123123ess!')
-})
+app.use('/api', route);
+
 
 app.get('/login', (req, res) => {
   res.send('Hello 안현상 api 포트포워딩 및 프록시 패스 성공~!')
