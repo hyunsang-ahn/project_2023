@@ -6,7 +6,11 @@ const LoginForm = () => {
 
         console.log('formData=============================', formData)
         try {
-            const response = await axios.post('/api/login', { ...formData })
+            const response = await axios.post('/api/login', {
+                
+              ...formData
+            })
+
             console.log("response >>", response)
         } catch (err) {
             console.log("Error >>", err);

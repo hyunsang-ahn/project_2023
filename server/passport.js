@@ -1,5 +1,5 @@
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+const { Strategy: LocalStrategy } = require('passport-local');
 const Users = require('./user');
 
 module.exports = () => {
@@ -12,23 +12,40 @@ module.exports = () => {
         });
       });
 
-  passport.use(new LocalStrategy({ // local 전략을 세움
-    usernameField: 'id',
-    passwordField: 'password',
-    session: true, // 세션에 저장 여부
-    passReqToCallback: false,
-  }, (id, password, done) => {
+      passport.use(
+        new LocalStrategy(
+          /*
+          {
+            userId: ...,
+            password: ...
+          }
+          */
+          {
+            usernameField: 'id',
+            passwordField: 'passowrd'
+          },
+          async (id, password, done) => {
+            try {
 
-
-    Users.findOne({ id: id }, (findError, user) => {
-      if (findError) return done(findError); // 서버 에러 처리
-      if (!user) return done(null, false, { message: '존재하지 않는 아이디입니다' }); // 임의 에러 처리
-      return user.comparePassword(password, (passError, isMatch) => {
-        if (isMatch) {
-          return done(null, user); // 검증 성공
-        }
-        return done(null, false, { message: '비밀번호가 틀렸습니다' }); // 임의 에러 처리
-      });
-    });
-  }));
+              console.log('id====================',id)
+              console.log('password====================',password)
+              return
+              const user = await db.User.findOne({
+                where: { userId }
+              });
+              if (!user) {
+                return done(null, false, { reason: '존재하지 않는 사용자입니다!' });
+              }
+              const result = await bcrypt.compare(password, user.password);
+              if (result) {
+                return done(null, user);
+              }
+              return done(null, false, { reason: '비밀번호가 틀립니다.' });
+            } catch (e) {
+              console.log(e);
+              return done(e);
+            }
+          }
+        )
+      );
 };
