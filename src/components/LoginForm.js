@@ -7,8 +7,8 @@ const LoginForm = () => {
         console.log('formData=============================', formData)
         try {
             const response = await axios.post('/api/login', {
-                
-              ...formData
+
+                ...formData
             })
 
             console.log("response >>", response)
@@ -21,7 +21,7 @@ const LoginForm = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <input  {...register("id", { required: true })} />
+                <input  {...register("userId", { required: true })} />
                 {errors.id && <span>This field is required</span>}
             </div>
 
