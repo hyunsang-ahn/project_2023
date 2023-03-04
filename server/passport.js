@@ -4,12 +4,13 @@ const Users = require('./user');
 
 module.exports = () => {
   passport.serializeUser((user, done) => { // Strategy 성공 시 호출됨
-    done(null, user._id); // 여기의 user._id가 req.session.passport.user에 저장
+    done(null, user); // 여기의 user._id가 req.session.passport.user에 저장
   });
-  passport.deserializeUser((id, done) => { // 매개변수 id는 req.session.passport.user에 저장된 값
-    User.findById(id, (err, user) => {
-      done(null, user); // 여기의 user가 req.user가 됨
-    });
+  passport.deserializeUser((user, done) => { // 매개변수 id는 req.session.passport.user에 저장된 값
+    // User.findById(id, (err, user) => {
+    //   done(null, user); // 여기의 user가 req.user가 됨
+    // });
+    done(null, user); // 여기의 user가 req.user가 됨
   });
 
   passport.use('local-login', new LocalStrategy({
