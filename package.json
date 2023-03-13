@@ -10,14 +10,19 @@
     "connect-mongo": "^3.2.0",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "koa": "^2.14.1",
+    "koa-router": "^12.0.0",
     "mongoose": "^6.10.0",
     "nodemon": "^2.0.20",
+    "open-color": "^1.9.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.2",
+    "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
+    "styled-components": "^5.3.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -25,7 +30,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "nodemon server/server.js"
+    "server": "nodemon server/server.js",
+    "dev": "start npm run start&& start npm run server"
   },
   "eslintConfig": {
     "extends": [
@@ -44,5 +50,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "main": "index.js",
+  "repository": "https://github.com/hyunsang-ahn/project_2023.git",
+  "author": "hyunsang-ahn <happylovetkd@naver.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-plugin-react": "^7.32.2"
   }
 }

@@ -1,93 +1,34 @@
+const Koa = require('koa');
+const Router = require('koa-router');
 
+const app = new Koa();
+const router = new Router();
 
+router.get('/', (ctx, next) => {
+  ctx.body = '홈';
+});
 
-const express = require('express')
-const http = require('http');
+router.get('/about', (ctx, next) => {
+  ctx.body = '소개';
+});
 
-const app = express()
-const db = require('./db.js'); // db 불러오기
-db(); // 실행
-const session = require('express-session'); // 세션 설정
-const passport = require('passport');
+router.get('/about/:name', (ctx, next) => {
+  const { name } = ctx.params; // 라우트 경로에서 :파라미터명 으로 정의된 값이 ctx.params 안에 설정됩니다.
+  ctx.body = name + '의 소개';
+});
 
-const route = require('./route.js');
-const bodyParser = require('body-parser')
-const MongoStore = require('connect-mongo');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('./user.js');
-app.use(bodyParser.json())
-app.set('port', process.env.PORT || 30022);
-
-// app.use(session({
-//   secret: 'sdfsdf',
-//   resave: false,
-//   saveUninitialized: true,
-//   store: MongoStore.create({ mongoUrl: 'mongodb://localhost/test-app' })
-
-// }));
-app.use(session({ secret: '비밀코드', resave: true, saveUninitialized: false })); // 세션 활성화
-
-app.use(passport.authenticate('session'));
-
-app.use(passport.initialize()); // passport 구동
-
-
-
-
-
-
-passport.use( new LocalStrategy({
-  usernameField: 'userId',
-  passwordField: 'password',
-  passReqToCallback: true
-}, (req, userId, password, done) => {
-  console.log('passport의 local-login : ', userId, password)
-
-  if (userId != 'test' || password != '12345') {
-    console.log('비밀번호 불일치!')
-    return done(null, false, req.flash('loginMessage', '비밀번호 불일치!'))
+router.get('/post', (ctx, next) => {
+  const { id } = ctx.request.query; // 주소 뒤에 ?id=10 이런식으로 작성된 쿼리는 ctx.request.query 에 파싱됩니다.
+  if (id) {
+    ctx.body = '포스트 #' + id;
+  } else {
+    ctx.body = '포스트 아이디가 없습니다.';
   }
-
-  console.log('비밀번호 일치!')
-  return done(null, {
-    userId: userId,
-    password: password
-  })
-}))
-
-passport.serializeUser((user, done) => { // Strategy 성공 시 호출됨
-  console.log('serializeUser========================',user)
-  done(null, user); // 여기의 user._id가 req.session.passport.user에 저장
-});
-passport.deserializeUser((user, done) => { // 매개변수 id는 req.session.passport.user에 저장된 값
-  console.log('deserializeUser========================',user)
-
-  // User.findById(id, (err, user) => {
-  //   done(null, user); // 여기의 user가 req.user가 됨
-  // });
-  done(null, user); // 여기의 user가 req.user가 됨
-
 });
 
+app.use(router.routes('/api'));
+app.use(router.allowedMethods());
 
-
-
-
-
-
-
-
-
-//서버 생성
-http.createServer(app).listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'));
+app.listen(4000, () => {
+  console.log('heurm server is listening to port 4000');
 });
-
-
-app.use('/api', route);
-
-
-// app.get('/login', (req, res) => {
-//   res.send('Hello 안현상 api 포트포워딩 및 프록시 패스 성공~!')
-// })
-
