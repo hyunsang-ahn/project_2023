@@ -1,11 +1,15 @@
-const Koa = require('koa');
-const app = new Koa();
+const express = require('express');
+const app = express();
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
-const router = require('./router');
 
-app.use(router.routes());
-//app.use(mount("/", router.routes()));
+const port = 5000; //React가 3000번 포트를 사용하기 때문에 node 서버가 사용할 포트넘버는 다른 넘버로 지정해준다.
+app.listen(port, () => { console.log(`Listening on port ${port}`) });
 
-app.listen('4000', () => {
-  console.log('app.start')
-});
+
+app.use(
+  createProxyMiddleware('/api', {
+    target: 'http://localhost:5000/',
+    changeOrigin: true
+  })
+)
