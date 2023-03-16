@@ -7,9 +7,12 @@ const port = 5000; //React가 3000번 포트를 사용하기 때문에 node 서�
 app.listen(port, () => { console.log(`Listening on port ${port}`) });
 
 
-app.use(
-  createProxyMiddleware('/api', {
-    target: 'http://localhost:5000/',
-    changeOrigin: true
-  })
-)
+// app.use(
+//   createProxyMiddleware('/api', {
+//     target: 'http://localhost:5000/',
+//     changeOrigin: true
+//   })
+// )
+
+app.use("/custom-api", require("./routes"));
+// app.use("/", createProxyMiddleware("/", { target: `http://localhost:30023` }));

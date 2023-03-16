@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const Home = () => {
     useEffect(() => {
-        const url = "/version";
+        const url = "/custom-api";
         axios.get(url)
             .then(function (response) {
                 console.log("성공");
