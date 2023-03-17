@@ -2,15 +2,16 @@ import { Route, Routes } from 'react-router-dom';
 import Register from './container/Register'
 import Home from './container/Home'
 import Login from './container/Login'
+import NotFound from './container/NotFound'
+import HeaderContainer from './container/Base/HeaderContainer';
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-
-    </Routes>
+    <div>
+      <HeaderContainer />
+      <Route exact path="/" component={Home} />
+      <Route path="/Login" component={Login} />
+    </div>
   );
 };
 

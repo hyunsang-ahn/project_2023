@@ -2,7 +2,7 @@
   "name": "react-passport",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000/custom-api",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@junyiz/koa-proxy-pass": "^1.2.3",
     "@koa/cors": "^4.0.0",
