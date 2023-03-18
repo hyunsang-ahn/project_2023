@@ -42,7 +42,7 @@ const Contents = styled.div`
     height: auto;
 `;
 
-const AuthWrapper = ({children}) => (
+const AuthWrapper = ({ children }) => (
     <Positioner>
         <ShadowedBox>
             <LogoWrapper>

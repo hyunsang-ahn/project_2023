@@ -19,7 +19,7 @@ const Home = () => {
     }, [])
     return (
         <div>
-            Home
+            여긴 홈 컴폰너트
         </div>
     )
 }

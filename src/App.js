@@ -1,17 +1,21 @@
-import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from './container/Register'
 import Home from './container/Home'
 import Login from './container/Login'
 import NotFound from './container/NotFound'
-import HeaderContainer from './container/Base/HeaderContainer';
+import Header from './components/Header'
 
 const App = () => {
   return (
-    <div>
-      <HeaderContainer />
-      <Route exact path="/" component={Home} />
-      <Route path="/Login" component={Login} />
-    </div>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Register" element={<Register />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 };
 
