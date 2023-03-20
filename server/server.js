@@ -13,6 +13,7 @@ const passportConfig = require('./passport.js')
 const flash = require('connect-flash')
 
 const bodyParser = require('body-parser')
+const db = require('./db')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -26,7 +27,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 passportConfig();
-
 
 
 
