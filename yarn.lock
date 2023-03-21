@@ -3799,6 +3799,11 @@ bson@^4.7.0:
   dependencies:
     buffer "^5.6.0"
 
+bson@^5.0.1:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-5.1.0.tgz#7b15cd9aa012b8bf9d320fbaefe15cc2fb657de2"
+  integrity sha512-FEecNHkhYRBe7X9KDkdG12xNuz5VHGeH6mCE0B5sBmYtiR/Ux/9vUH/v4NUoBCDr6NuEhvahjoLiiRogptVW0A==
+
 buffer-from@^1.0.0:
   version "1.1.2"
   resolved "https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.2.tgz"
@@ -7505,7 +7510,7 @@ mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
-mongodb-connection-string-url@^2.5.4:
+mongodb-connection-string-url@^2.5.4, mongodb-connection-string-url@^2.6.0:
   version "2.6.0"
   resolved "https://registry.npmjs.org/mongodb-connection-string-url/-/mongodb-connection-string-url-2.6.0.tgz"
   integrity sha512-WvTZlI9ab0QYtTYnuMLgobULWhokRjtC7db9LtcVfJ+Hsnyr5eo6ZtNAt3Ly24XZScGMelOcGtm7lSn0332tPQ==
@@ -7537,6 +7542,17 @@ mongodb@^3.1.0:
     safe-buffer "^5.1.2"
   optionalDependencies:
     saslprep "^1.0.0"
+
+mongodb@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-5.1.0.tgz#e551f9e496777bde9173e51d16c163ab2c805b9d"
+  integrity sha512-qgKb7y+EI90y4weY3z5+lIgm8wmexbonz0GalHkSElQXVKtRuwqXuhXKccyvIjXCJVy9qPV82zsinY0W1FBnJw==
+  dependencies:
+    bson "^5.0.1"
+    mongodb-connection-string-url "^2.6.0"
+    socks "^2.7.1"
+  optionalDependencies:
+    saslprep "^1.0.3"
 
 mongoose@^6.10.0:
   version "6.10.0"
@@ -7638,6 +7654,18 @@ node-releases@^2.0.8:
   version "2.0.10"
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-2.0.10.tgz"
   integrity sha512-5GFldHPXVG/YZmFzJvKK2zDSzPKhEp0+ZR5SVaoSag9fsL5YgHbUHDfnG5494ISANDcK4KwPXAx2xqVEydmd7w==
+
+node-ssh@^13.0.1:
+  version "13.0.1"
+  resolved "https://registry.yarnpkg.com/node-ssh/-/node-ssh-13.0.1.tgz#e20759e4d6490c5c7babbc1b21b72479e90620be"
+  integrity sha512-prGXb9KXXtrienVBPiyOCm7F8KSsQciN8VCgrkZeJAlSEtF8HsXa/0uVE5a6MgwIBPa0etTgwiyj/lfiFdVK1Q==
+  dependencies:
+    is-stream "^2.0.0"
+    make-dir "^3.1.0"
+    sb-promise-queue "^2.1.0"
+    sb-scandir "^3.1.0"
+    shell-escape "^0.2.0"
+    ssh2 "^1.5.0"
 
 nodemon@^2.0.20:
   version "2.0.20"
@@ -9286,6 +9314,18 @@ saxes@^5.0.1:
   dependencies:
     xmlchars "^2.2.0"
 
+sb-promise-queue@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/sb-promise-queue/-/sb-promise-queue-2.1.0.tgz#7e44bebef643f75d809a3db7f605b815d877a04d"
+  integrity sha512-zwq4YuP1FQFkGx2Q7GIkZYZ6PqWpV+bg0nIO1sJhWOyGyhqbj0MsTvK6lCFo5TQwX5pZr6SCQ75e8PCDCuNvkg==
+
+sb-scandir@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/sb-scandir/-/sb-scandir-3.1.0.tgz#31c346abb5184b73c5a25b286858f4299aa8756c"
+  integrity sha512-70BVm2xz9jn94zSQdpvYrEG101/UV9TVGcfWr9T5iob3QhCK4lYXeculfBqPGFv3XTeKgx4dpWyYIDeZUqo4kg==
+  dependencies:
+    sb-promise-queue "^2.1.0"
+
 scheduler@^0.23.0:
   version "0.23.0"
   resolved "https://registry.npmjs.org/scheduler/-/scheduler-0.23.0.tgz"
@@ -9447,6 +9487,11 @@ shebang-regex@^3.0.0:
   resolved "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
+shell-escape@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/shell-escape/-/shell-escape-0.2.0.tgz#68fd025eb0490b4f567a027f0bf22480b5f84133"
+  integrity sha512-uRRBT2MfEOyxuECseCZd28jC1AJ8hmqqneWQ4VWUTgCAFvb3wKU1jLqj6egC4Exrr88ogg3dp+zroH4wJuaXzw==
+
 shell-quote@^1.7.3:
   version "1.8.0"
   resolved "https://registry.npmjs.org/shell-quote/-/shell-quote-1.8.0.tgz"
@@ -9599,7 +9644,7 @@ sprintf-js@~1.0.2:
   resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz"
   integrity sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==
 
-ssh2@^1.11.0:
+ssh2@^1.11.0, ssh2@^1.5.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/ssh2/-/ssh2-1.11.0.tgz#ce60186216971e12f6deb553dcf82322498fe2e4"
   integrity sha512-nfg0wZWGSsfUe/IBJkXVll3PEZ//YH2guww+mP88gTpuSU4FtZN7zu9JoeTGOyCNx2dTDtT9fOpWwlzyj4uOOw==
