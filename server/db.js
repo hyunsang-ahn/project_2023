@@ -77,7 +77,6 @@
 //     });
 //   });
 
-const { createTunnel } = require('tunnel-ssh');
 
 // const port = 27017;
 
@@ -105,48 +104,57 @@ const { createTunnel } = require('tunnel-ssh');
 // server.on('connection', (connection) => {
 //   console.log('new connection');
 // });
+const mongoose = require('mongoose')
+const { createTunnel } = require('tunnel-ssh');
+const port = 27017;
 
-async function connectToMongoDB() {
-  const tunnelOptions = {
-    host: process.env.SSH_HOST,
-    port: process.env.SSH_PORT,
-    username: process.env.SSH_USER,
-    password: process.env.SSH_PASSWORD,
-    dstPort: 27017,
-    localPort: 27017
-  };
+const tunnelOptions = {
+  autoClose: true
+};
+const serverOptions = {
+  port: port
+};
+const sshOptions = {
+  host: process.env.SSH_HOST,
+  port: process.env.SSH_PORT,
+  username: process.env.SSH_USER,
+  password: process.env.SSH_PASSWORD,
+};
+const forwardOptions = {
+  srcAddr: '0.0.0.0',
+  srcPort: port,
+  dstAddr: '127.0.0.1',
+  dstPort: port
+};
 
-  const serverOptions = {
-    host: 'localhost',
-    port: 27017,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  };
+createTunnel(tunnelOptions, serverOptions, sshOptions, forwardOptions).
+  then(async ([server, conn], error) => {
 
-  const sshOptions = {
-    keepAlive: true,
-    readyTimeout: 20000,
-  };
+    const db = mongoose.connect('mongodb://127.0.0.1:27017/test');
+    const schema = new Schema({
+      name: String
+    }, {
+      capped: { size: 1024 },
+      bufferCommands: false,
+      autoCreate: false // disable `autoCreate` since `bufferCommands` is false
+    });
+    const MyModel = mongoose.model('Test', schema);
+    // Will just hang until mongoose successfully connects
+    MyModel.findOne(function (error, result) { /* ... */ });
 
-  const forwardOptions = {
-    srcPort: 27017,
-    dstHost: 'localhost',
-    dstPort: 27017
-  };
+    await db.once('open', () => {
+      console.log('connection success');
+    });
+    await db.on('error', () => {
+      console.log('connection error');
+    });
 
-  const [server, conn] = await createTunnel(tunnelOptions, serverOptions, sshOptions, forwardOptions);
 
-  // MongoDB에 연결
-  const db = conn.db('database-name');
-  const collection = db.collection('collection-name');
-  const result = await collection.find().toArray();
+    await server.on('error', (e) => {
+      console.log(e);
+    });
 
-  // 결과 출력
-  console.log('result==========================', result);
-
-  // MongoDB 및 SSH 터널 닫기
-  await conn.close();
-  await server.close();
-}
-
-connectToMongoDB().catch(console.error);
+    await conn.on('error', (e) => {
+      console.log(e);
+    });
+  });
