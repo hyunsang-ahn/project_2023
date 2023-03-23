@@ -126,29 +126,17 @@ const forwardOptions = {
   dstAddr: '127.0.0.1',
   dstPort: port
 };
+const MongoClient = require('mongodb').MongoClient;
+const mongodbUrl = 'mongodb://localhost:27017/test';
 
 createTunnel(tunnelOptions, serverOptions, sshOptions, forwardOptions).
   then(async ([server, conn], error) => {
+    const client = await MongoClient.connect(mongodbUrl);
+    const collection = await client.db('test').collection('users').find().toArray()
 
-    const db = mongoose.connect('mongodb://127.0.0.1:27017/test');
-    const schema = new Schema({
-      name: String
-    }, {
-      capped: { size: 1024 },
-      bufferCommands: false,
-      autoCreate: false // disable `autoCreate` since `bufferCommands` is false
-    });
-    const MyModel = mongoose.model('Test', schema);
-    // Will just hang until mongoose successfully connects
-    MyModel.findOne(function (error, result) { /* ... */ });
+    console.log('connect done')
 
-    await db.once('open', () => {
-      console.log('connection success');
-    });
-    await db.on('error', () => {
-      console.log('connection error');
-    });
-
+    console.log('collection====', collection)
 
     await server.on('error', (e) => {
       console.log(e);
