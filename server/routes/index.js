@@ -5,8 +5,8 @@ const passport = require('passport');
 const express = require('express');
 const path = require('path');
 const router = express.Router(); // 라우터 분리
-
-
+const mongoose = require('mongoose')
+const client = require('../db')
 
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/custom-api/success',
@@ -43,5 +43,20 @@ router.get('/logout', function (req, res, next) {
     });
 });
 
+
+router.post('/register', async (req, res, next) => {
+    console.log('req========================', req.body)
+
+    const { email, name, password } = req.body
+    const result = await client.db('project').collection('users').insertOne({
+        email: email,
+        name: name,
+        password: password,
+    })
+
+    console.log('result=========================', result)
+    res.send(result)
+
+});
 
 module.exports = router; // 모듈로 만드는 부분

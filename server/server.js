@@ -15,7 +15,8 @@ const passportConfig = require('./passport.js')
 const flash = require('connect-flash')
 
 const bodyParser = require('body-parser')
-const db = require('./db')
+
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -37,7 +38,9 @@ app.listen(port, () => { console.log(`Listening on port ${port}`) });
 // Router Use
 
 app.use('/custom-api', require(path.join(__dirname, 'routes/index.js')))
-console.log(`ready`)
+
+// const { db_users } = require('./models/users')
+
 // app.use(
 //   createProxyMiddleware('/api', {
 //     target: 'http://localhost:5000/',
