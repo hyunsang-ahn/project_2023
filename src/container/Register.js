@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
+import InputWithLabel from 'components/Auth/InputWithLabel'
+
+import AuthSubmitButton from 'components/Auth/AuthSubmitButton';
 
 
 const Register = () => {
@@ -26,19 +29,41 @@ const Register = () => {
     return (
         /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
         <form onSubmit={handleSubmit(onSubmit)}>
-            {/* register your input into the hook by invoking the "register" function */}
-            <input {...register("email", { required: true })} />
 
-            <input {...register("name", { required: true })} />
+            <InputWithLabel
+                label={'이메일'}
+                register={register}
+                name={'email'}
 
-            {/* include validation with required or other standard HTML validation rules */}
-            <input {...register("password", { required: true })} />
 
-            <input {...register("password_chk", { required: true })} />
+            />
+            <InputWithLabel
+                label={'이름'}
+                register={register}
+                name={'name'}
 
-            {/* errors will return when field validation fails  */}
 
-            <button type="submit" >로그인</button>
+            />
+            <InputWithLabel
+                label={'패스워드'}
+                register={register}
+                name={'password'}
+
+
+            />
+            <InputWithLabel
+                label={'패스워드 확인'}
+                register={register}
+                name={'password_chk'}
+
+
+            />
+
+
+
+            <AuthSubmitButton
+                children={'회원가입'}
+            />
         </form>
     )
 }

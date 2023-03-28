@@ -35,7 +35,7 @@ const Input = styled.input`
 const InputWithLabel = ({ label, register, name, ...rest }) => (
     <Wrapper>
         <Label>{label}</Label>
-        <input {...register(name)} {...rest} />;
+        <Input {...register(name)} {...rest} />
     </Wrapper>
 );
 
