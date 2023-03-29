@@ -81,7 +81,7 @@ router.post('/register', async (req, res, next) => {
     })
 
     console.log('result=========================', result)
-    res.send(result)
+    res.send('success')
 
 });
 

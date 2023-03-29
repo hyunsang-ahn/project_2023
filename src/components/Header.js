@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
-
+import axios from 'axios';
+import _ from 'lodash';
 function Header() {
+    const [userId, setUserId] = useState(null)
+    useEffect(() => {
+        const url = "/custom-api/loginChk";
+        axios.get(url)
+            .then(function (response) {
+                console.log('response======================', response);
+                if (response.data.userId) {
+                    setUserId(response.data.userId)
+                }
+            })
+            .catch(function (error) {
+                console.log("실패");
+            })
+
+
+    }, [])
+
+
+
 
     // 가장 메인 div
     const HeaderWraper = styled.div`
@@ -49,12 +69,34 @@ function Header() {
 
             <ImgBox to="/" />
             <LinkWrap >
-                <LinkBtn to="/Login">
-                    로그인
-                </LinkBtn>
-                <LinkBtn to="/Register">
-                    회원가입
-                </LinkBtn>
+                {/* 로그인시 헤더 */}
+                {!_.isEmpty(userId) && (
+                    <>
+                        <span>{userId}님 반가워요</span>
+                        <LinkBtn to="/Register">
+                            글쓰기
+                        </LinkBtn>
+                        <LinkBtn to="/Register">
+                            마이페이지
+                        </LinkBtn>
+                        <button>로그아웃</button>
+                    </>
+                )}
+                {/* 비로그인시 헤더 */}
+
+                {_.isEmpty(userId) && (
+                    <>
+                        <LinkBtn to="/Login">
+                            로그인
+                        </LinkBtn>
+                        <LinkBtn to="/Register">
+                            회원가입
+                        </LinkBtn>
+                    </>
+
+                )}
+
+
             </LinkWrap >
 
         </HeaderWraper>

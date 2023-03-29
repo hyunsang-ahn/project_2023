@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 
 
@@ -27,7 +28,15 @@ const Home = () => {
         axios.get(url)
             .then(function (response) {
                 console.log('logout======================', response);
-
+                Swal.fire({
+                    title: '로그아웃 성공',
+                    text: '페이지를 새로고침합니다.',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.reload()
+                })
             })
             .catch(function (error) {
                 console.log("실패");
