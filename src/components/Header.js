@@ -68,7 +68,7 @@ function Header() {
 
 
             <ImgBox to="/" />
-            <LinkWrap >
+            <LinkWrap>
                 {/* 로그인시 헤더 */}
                 {!_.isEmpty(userId) && (
                     <>
@@ -97,7 +97,7 @@ function Header() {
                 )}
 
 
-            </LinkWrap >
+            </LinkWrap>
 
         </HeaderWraper>
     )
