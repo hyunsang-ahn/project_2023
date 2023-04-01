@@ -7,12 +7,12 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from 'react-redux';
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
-import rootReducer from "./reducers";
+import user from "./reducers/user";
 
 const sagaMiddleware = createSagaMiddleware();
 const enhancer =
   compose(applyMiddleware(sagaMiddleware))
-const store = createStore(rootReducer, enhancer);
+const store = createStore(user, enhancer);
 
 sagaMiddleware.run(rootSaga); // 루트 사가를 실행해줍니다.
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -12,9 +12,11 @@ function getUseApi(params) {
 }
 
 function* getUser(action) {
+    console.log('action===============================', action)
     try {
         // api 통신할때는 call
         const result = yield call(getUseApi, action.params);
+        console.log('result===============================', result)
 
         // 아래와 같이 api 결과를 핸들링하여 dispatch 가능
         yield put({ type: GET_USER_SUCCESS, data: result.data });

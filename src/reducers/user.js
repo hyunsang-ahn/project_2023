@@ -6,15 +6,14 @@ import {
     GET_USER_FAILURE
 } from "constants/actionTypes";
 
-export const getUser = params => ({
-    type: GET_USER_REQUEST,
+export const getUser = () => ({
+    type: GET_USER_REQUEST
     /** 중요! - 이 params은 saga의
     const result = yield call(getUserTicketApi, action.params);
     여기의 params로 들어갑니다. */
-    params
 });
 
-export const setUser = user => ({ type: SET_USER, user });
+// export const setUser = user => ({ type: SET_USER, user });
 
 const initalState = {
     user: null,

@@ -2,11 +2,38 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
-
+import { useSelector, useDispatch } from "react-redux";
+import { getUser } from "reducers/user";
 
 
 const Home = () => {
     const [userId, setUserId] = useState('')
+
+
+    // dispatch를 사용하기 위한 준비
+    const dispatch = useDispatch();
+
+    // store에 접근하여 state 가져오기
+    let state = useSelector((state) => { return state })
+    console.log(state)  // 콘솔에 store에 저장되어 있던 변수들이 모두 출력된다
+
+    const userChk = () => {
+        // store에 있는 state 바꾸는 함수 실행
+        dispatch(getUser());
+    };
+    useEffect(() => {
+        userChk()
+    }, [])
+
+
+
+
+
+
+
+
+
+
     useEffect(() => {
         const url = "/custom-api/loginChk";
         axios.get(url)
