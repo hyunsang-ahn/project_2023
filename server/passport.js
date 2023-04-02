@@ -5,21 +5,31 @@ const crypto = require('crypto');
 const _ = require('lodash');
 
 
-
+const getUserById = async (email) => {
+  const user_data = await client.db('project').collection('users')
+    .findOne({
+      email: email
+    })
+  console.log('user_data===========================', user_data)
+  return user_data
+}
 
 module.exports = () => {
   passport.serializeUser(function (user, done) {
     console.log('serializeUser() 호출됨.');
-    console.log(user);
 
-    done(null, user);
+    done(null, user.email);
   });
 
-  passport.deserializeUser(function (user, done) {
-    console.log('deserializeUser() 호출됨.');
-    console.log(user);
+  passport.deserializeUser(function (email, done) {
 
-    done(null, user);
+
+    console.log('deserializeUser() 호출됨.');
+
+    getUserById(email).then(user => done(null, user))
+
+
+
   })
 
   passport.use(new LocalStrategy({
@@ -35,7 +45,6 @@ module.exports = () => {
       })
 
 
-    console.log('user_data=======================', user_data)
 
     if (_.isEmpty(user_data)) {
       console.log('유저 미존재!')
@@ -50,24 +59,18 @@ module.exports = () => {
 
             })
             .then((result) => result.salt);
-          console.log('salt=======================', salt)
           crypto.pbkdf2(plainPassword, salt, 9999, 64, 'sha512', (err, key) => {
             if (err) reject(err);
             resolve(key.toString('base64'));
           });
         });
       const hashed_password = await makePasswordHashed(userId, password);
-      console.log('hashed_password=======================', hashed_password)
 
 
 
-      console.log('user_data=======================', user_data)
       if (user_data.password === hashed_password) {
         console.log('비밀번호 일치!')
-        return done(null, {
-          userId: userId,
-          password: password
-        })
+        return done(null, user_data)
       } else {
         console.log('비밀번호 불일치!')
         return done(null, false)

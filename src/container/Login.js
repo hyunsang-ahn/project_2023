@@ -11,11 +11,9 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onSubmit = data => {
-        console.log('data========================', data)
         const url = "/custom-api/login";
         axios.post(url, { ...data })
             .then(function (response) {
-                console.log('response===================', response);
                 if (response.data === 'success') {
                     console.log('로그인 성공 메인 페이지로 이동함.')
                     Swal.fire({

@@ -15,7 +15,6 @@ const Register = () => {
         const url = "/custom-api/register";
         axios.post(url, { ...data })
             .then(function (response) {
-                console.log('response===================', response);
                 if (response.data === 'success') {
                     Swal.fire({
                         title: '회원가입 성공',

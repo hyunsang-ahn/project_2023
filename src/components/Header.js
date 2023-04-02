@@ -3,23 +3,10 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import _ from 'lodash';
+import { useSelector, useDispatch } from "react-redux";
 function Header() {
-    const [userId, setUserId] = useState(null)
-    useEffect(() => {
-        const url = "/custom-api/loginChk";
-        axios.get(url)
-            .then(function (response) {
-                console.log('response======================', response);
-                if (response.data.userId) {
-                    setUserId(response.data.userId)
-                }
-            })
-            .catch(function (error) {
-                console.log("실패");
-            })
 
-
-    }, [])
+    const user = useSelector((state) => { return state.user })
 
 
 
@@ -70,9 +57,9 @@ function Header() {
             <ImgBox to="/" />
             <LinkWrap>
                 {/* 로그인시 헤더 */}
-                {!_.isEmpty(userId) && (
+                {!_.isEmpty(user) && (
                     <>
-                        <span>{userId}님 반가워요</span>
+                        <span>{_.get(user, 'name')}님 반가워요</span>
                         <LinkBtn to="/Register">
                             글쓰기
                         </LinkBtn>
@@ -84,7 +71,7 @@ function Header() {
                 )}
                 {/* 비로그인시 헤더 */}
 
-                {_.isEmpty(userId) && (
+                {_.isEmpty(user) && (
                     <>
                         <LinkBtn to="/Login">
                             로그인
