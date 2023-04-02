@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "reducers/user";
 import _ from 'lodash';
-
+import Draft from 'components/Draft';
 
 const Home = () => {
     const [userId, setUserId] = useState('')
@@ -33,7 +33,7 @@ const Home = () => {
     return (
         <div>
             여긴 홈 컴폰너트
-
+            <Draft />
             {!_.isEmpty(user) &&
                 <>
                     <span>반갑습니다 {_.get(user, 'name')}님</span>
