@@ -8,6 +8,7 @@ const router = express.Router(); // 라우터 분리
 const mongoose = require('mongoose')
 const client = require('../db')
 const crypto = require('crypto');
+const multer = require('multer');
 
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/custom-api/success',
@@ -84,5 +85,29 @@ router.post('/register', async (req, res, next) => {
     res.send('success')
 
 });
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'C:/study/react-passport/uploads'); // 업로드할 파일의 저장 경로
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname); // 업로드할 파일의 원래 이름으로 저장
+    }
+});
+
+const upload = multer({ storage: storage });
+router.post('/uploadImage', upload.single('multipartFiles'), function (req, res) {
+    console.log('req.file================================', req.file); // 업로드된 파일 정보 출력
+    res.send(req.file)
+
+});
+
+
+
+
+
+
+
+
 
 module.exports = router; // 모듈로 만드는 부분

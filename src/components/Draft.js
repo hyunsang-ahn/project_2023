@@ -4,6 +4,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import styled from 'styled-components';
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
+import axios from 'axios';
+
 const MyBlock = styled.div`
     .wrapper-class{
         width: 50%;
@@ -37,10 +39,44 @@ const Draft = () => {
         setEditorState(editorState);
     };
     const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    const uploadCallback = () => {
-        console.log("이미지 업로드");
-    };
 
+
+    // const uploadCallback = (file) => {
+
+    //     return new Promise((resolve, reject) => {
+    //         const reader = new FileReader();
+
+    //         reader.onloadend = async () => {
+    //             console.log("이미지 업로드");
+
+    //             const formData = new FormData();
+    //             formData.append("multipartFiles", file);
+
+
+    //             const res = await axios.post('/custom-api/uploadImage', formData);
+    //             console.log('res===========================', res)
+    //             resolve({ data: { link: res.data } });
+    //         };
+
+    //         reader.readAsDataURL(file);
+    //     });
+    // };
+    const uploadCallback = (file) => {
+        return new Promise(
+            (resolve, reject) => {
+                const formData = new FormData();
+                formData.append('multipartFiles', file);
+                axios.post('/custom-api/uploadImage', formData)
+                    .then((response) => {
+                        resolve({ data: { link: response.data.path } });
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        reject(error);
+                    });
+            }
+        );
+    };
     return (
         <MyBlock>
             <Editor
@@ -57,7 +93,10 @@ const Draft = () => {
                     textAlign: { inDropdown: true },
                     link: { inDropdown: true },
                     history: { inDropdown: false },
-                    image: { uploadCallback: uploadCallback }
+                    image: {
+                        uploadCallback: uploadCallback,
+
+                    }
                 }}
                 placeholder="내용을 작성해주세요."
                 // 한국어 설정
