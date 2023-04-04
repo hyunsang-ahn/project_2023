@@ -39,7 +39,7 @@ const Draft = () => {
         setEditorState(editorState);
     };
     const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-
+    console.log('editorState=========================', draftToHtml(convertToRaw(editorState.getCurrentContent())))
 
     // const uploadCallback = (file) => {
 

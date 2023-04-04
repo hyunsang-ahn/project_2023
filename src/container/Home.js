@@ -33,7 +33,10 @@ const Home = () => {
     return (
         <div>
             여긴 홈 컴폰너트
+            <input type='text' />
             <Draft />
+
+
             {!_.isEmpty(user) &&
                 <>
                     <span>반갑습니다 {_.get(user, 'name')}님</span>
