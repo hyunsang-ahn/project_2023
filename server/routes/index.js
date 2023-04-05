@@ -96,8 +96,10 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-router.post('/uploadImage', upload.single('multipartFiles'), function (req, res) {
-    console.log('req.file================================', req.file); // 업로드된 파일 정보 출력
+router.post('/uploadImage', upload.array('multipartFiles'), function (req, res) {
+    console.log('req==========================', req.files)
+
+
     res.send(req.file)
 
 });
