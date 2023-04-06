@@ -6,84 +6,38 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUser } from "reducers/user";
 import _ from 'lodash';
 import Draft from 'components/Draft';
-import ImageUploading from 'react-images-uploading';
+import TitleInput from 'components/TitleInput';
 
+import ImgUploader from 'components/ImgUploader';
+import { useForm } from "react-hook-form";
 
 const WriteForm = () => {
-    const [images, setImages] = React.useState([]);
-    const maxNumber = 69;
-
-    const onChange = (imageList, addUpdateIndex) => {
-        // data for submit
-        console.log(imageList, addUpdateIndex);
-        setImages(imageList);
-        return new Promise(
-            (resolve, reject) => {
-                const formData = new FormData();
-                console.log('file=============================', imageList)
-                const new_ima_list = imageList.map((c) => c.file)
-                console.log('new_ima_list=============================', new_ima_list)
-
-                formData.append('multipartFiles', new_ima_list);
-                axios.post('/custom-api/uploadImage', formData)
-                    .then((response) => {
-                        resolve({ data: { link: response.data.path } });
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        reject(error);
-                    });
-            }
-        );
+    const { register, handleSubmit, watch, formState: { errors }, setValue, getValues } = useForm();
+    const onSubmit = data => console.log(data);
 
 
-    };
+
     return (
+        /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <TitleInput
 
-        <div className="App">
-            <input type='text' />
+                register={register}
+                setValue={setValue}
+            />
+            <Draft
 
-            <Draft />
-            <ImageUploading
-                multiple
-                value={images}
-                onChange={onChange}
-                maxNumber={maxNumber}
-                dataURLKey="data_url"
-            >
-                {({
-                    imageList,
-                    onImageUpload,
-                    onImageRemoveAll,
-                    onImageUpdate,
-                    onImageRemove,
-                    isDragging,
-                    dragProps,
-                }) => (
-                    // write your building UI
-                    <div className="upload__image-wrapper">
-                        <button
-                            style={isDragging ? { color: 'red' } : undefined}
-                            onClick={onImageUpload}
-                            {...dragProps}
-                        >
-                            Click or Drop here
-                        </button>
-                        &nbsp;
-                        <button onClick={onImageRemoveAll}>Remove all images</button>
-                        {imageList.map((image, index) => (
-                            <div key={index} className="image-item">
-                                <img src={image['data_url']} alt="" width="100" />
-                                <div className="image-item__btn-wrapper">
-                                    <button onClick={() => onImageUpdate(index)}>Update</button>
-                                    <button onClick={() => onImageRemove(index)}>Remove</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </ImageUploading>
-        </div>
+                register={register}
+                setValue={setValue}
+            />
+            <ImgUploader
+
+                register={register}
+                setValue={setValue}
+            />
+            <button>저장하기</button>
+        </form>
+
 
 
     )

@@ -9,7 +9,7 @@ const mongoose = require('mongoose')
 const client = require('../db')
 const crypto = require('crypto');
 const multer = require('multer');
-
+const _ = require('lodash')
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/custom-api/success',
 
@@ -96,11 +96,21 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-router.post('/uploadImage', upload.array('multipartFiles'), function (req, res) {
-    console.log('req==========================', req.files)
+router.post('/uploadImage', upload.single('multipartFiles'), async (req, res) => {
+    const result = await client.db('project').collection('uploadfiles').insertOne({
+        fieldname: _.get(req.file, 'fieldname'),
+        originalname: _.get(req.file, 'originalname'),
+        encoding: _.get(req.file, 'encoding'),
+        mimetype: _.get(req.file, 'mimetype'),
+        destination: _.get(req.file, 'destination'),
+        filename: _.get(req.file, 'filename'),
+        path: _.get(req.file, 'path'),
+        size: _.get(req.file, 'size'),
 
+    })
+    console.log('result==========================', result)
 
-    res.send(req.file)
+    res.send(result)
 
 });
 

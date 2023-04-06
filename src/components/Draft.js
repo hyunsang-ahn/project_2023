@@ -29,7 +29,10 @@ const IntroduceContent = styled.div`
   margin: 0 auto;
   margin-bottom: 4rem;
 `;
-const Draft = () => {
+const Draft = ({
+    register,
+    setValue
+}) => {
     // useState로 상태관리하기 초기값은 EditorState.createEmpty()
     // EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -37,46 +40,11 @@ const Draft = () => {
     const onEditorStateChange = (editorState) => {
         // editorState에 값 설정
         setEditorState(editorState);
+        setValue('description', draftToHtml(convertToRaw(editorState.getCurrentContent())))
     };
     const editorToHtml = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    console.log('editorState=========================', draftToHtml(convertToRaw(editorState.getCurrentContent())))
-
-    // const uploadCallback = (file) => {
-
-    //     return new Promise((resolve, reject) => {
-    //         const reader = new FileReader();
-
-    //         reader.onloadend = async () => {
-    //             console.log("이미지 업로드");
-
-    //             const formData = new FormData();
-    //             formData.append("multipartFiles", file);
 
 
-    //             const res = await axios.post('/custom-api/uploadImage', formData);
-    //             console.log('res===========================', res)
-    //             resolve({ data: { link: res.data } });
-    //         };
-
-    //         reader.readAsDataURL(file);
-    //     });
-    // };
-    const uploadCallback = (file) => {
-        return new Promise(
-            (resolve, reject) => {
-                const formData = new FormData();
-                formData.append('multipartFiles', file);
-                axios.post('/custom-api/uploadImage', formData)
-                    .then((response) => {
-                        resolve({ data: { link: response.data.path } });
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        reject(error);
-                    });
-            }
-        );
-    };
     return (
         <MyBlock>
             <Editor
@@ -93,10 +61,7 @@ const Draft = () => {
                     textAlign: { inDropdown: true },
                     link: { inDropdown: true },
                     history: { inDropdown: false },
-                    image: {
-                        uploadCallback: uploadCallback,
 
-                    }
                 }}
                 placeholder="내용을 작성해주세요."
                 // 한국어 설정
@@ -108,7 +73,8 @@ const Draft = () => {
                 // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
                 onEditorStateChange={onEditorStateChange}
             />
-            <IntroduceContent dangerouslySetInnerHTML={{ __html: editorToHtml }} />
+            {/* <IntroduceContent dangerouslySetInnerHTML={{ __html: editorToHtml }} /> */}
+            <input type='hidden' name={"description"} {...register("description")} />
         </MyBlock>
     );
 };
