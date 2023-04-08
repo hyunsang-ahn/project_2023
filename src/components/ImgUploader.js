@@ -58,17 +58,18 @@ const ImgUploader = ({
                         style={isDragging ? { color: 'red' } : undefined}
                         onClick={onImageUpload}
                         {...dragProps}
+                        type={'button'}
                     >
                         Click or Drop here
                     </button>
                     &nbsp;
-                    <button onClick={onImageRemoveAll}>Remove all images</button>
+                    <button type={'button'} onClick={onImageRemoveAll}>Remove all images</button>
                     {imageList.map((image, index) => (
                         <div key={index} className="image-item">
                             <img src={image['data_url']} alt="" width="100" />
                             <div className="image-item__btn-wrapper">
-                                <button onClick={() => onImageUpdate(index)}>Update</button>
-                                <button onClick={() => onImageRemove(index)}>Remove</button>
+                                <button type={'button'} onClick={() => onImageUpdate(index)}>Update</button>
+                                <button type={'button'} onClick={() => onImageRemove(index)}>Remove</button>
                                 <input {...register(`upload_img_id[${index}]`)} type='hidden' />
                             </div>
                         </div>

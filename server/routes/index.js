@@ -116,6 +116,32 @@ router.post('/uploadImage', upload.single('multipartFiles'), async (req, res) =>
 
 
 
+router.post('/BoardWrite', async (req, res) => {
+    try {
+        console.log('req.body===============', req.body)
+
+        const result = await client.db('project').collection('Board').insertOne({
+            ...req.body
+
+        })
+        console.log('result==========================', result)
+
+        // res.send(result)
+        res.status(200).send({
+            message: "sucess",
+            result,
+        }); //send success response
+    } catch (e) {
+        res.status(500).send({
+            message: e.message,
+        }); //send error response
+    }
+
+
+});
+
+
+
 
 
 
