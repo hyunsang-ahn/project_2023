@@ -142,6 +142,26 @@ router.post('/BoardWrite', async (req, res) => {
 
 
 
+router.get('/Board', async (req, res) => {
+    try {
+
+        const result = await client.db('project').collection('Board').find().toArray()
+        console.log('result==========================', result)
+
+        // res.send(result)
+        res.status(200).send({
+            message: "sucess",
+            result,
+        }); //send success response
+    } catch (e) {
+        res.status(500).send({
+            message: e.message,
+        }); //send error response
+    }
+
+
+});
+
 
 
 
