@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 
 const BoardCard = ({ data }) => {
+    console.log('data==================', data)
     return (
         <>
             <div>{_.get(data, 'title')}</div>
