@@ -145,7 +145,28 @@ router.post('/BoardWrite', async (req, res) => {
 router.get('/Board', async (req, res) => {
     try {
 
-        const result = await client.db('project').collection('Board').find().toArray()
+        const result = await client.db('project').collection('Board')
+            .aggregate([
+                {
+                    $addFields: {
+                        "upload_img_ids": {
+                            $map: {
+                                input: "$upload_img_id",
+                                as: "image_id",
+                                in: { $toObjectId: "$$image_id" }
+                            }
+                        }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "uploadfiles",
+                        localField: "upload_img_ids",
+                        foreignField: "_id",
+                        as: "uploadfiles"
+                    }
+                }
+            ]).toArray()
         console.log('result==========================', result)
 
         // res.send(result)

@@ -7,7 +7,16 @@ const BoardCard = ({ data }) => {
         <>
             <div>{_.get(data, 'title')}</div>
             <div>{_.get(data, 'description')}</div>
-            <div>{_.get(data, 'upload_img_id')}</div>
+            <div>{_.get(data, 'uploadfiles').map((c, idx) => {
+                const alt = _.get(c, 'filename')
+
+                const src = 'uploads/' + alt
+                return (
+                    <img src={src} alt={alt}></img>
+                )
+
+            })}
+            </div>
 
         </>
     )
