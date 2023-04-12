@@ -17,10 +17,12 @@ const flash = require('connect-flash')
 const bodyParser = require('body-parser')
 // 프로젝트 root 디렉토리 경로를 구합니다.
 const rootDirectory = path.dirname(require.main.filename);
-console.log('rootDirectory=================', rootDirectory.replace('\server', ''))
+console.log('rootDirectory2=================', require.main)
+
+console.log('rootDirectory=================', rootDirectory.replace('\\server', ''))
 
 // uploads 폴더의 경로를 구합니다.
-const uploadDirectory = path.join(rootDirectory, 'uploads');
+const uploadDirectory = path.join(rootDirectory.replace('\\server', ''), 'uploads');
 console.log('uploadDirectory=================', uploadDirectory)
 // /uploads 경로로 접근 가능하도록 설정합니다.
 app.use('/uploads', express.static(uploadDirectory));
