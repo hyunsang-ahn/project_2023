@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2'
 import _ from 'lodash';
 import BoardCard from 'components/BoardCard';
+import styled from 'styled-components';
 
 const BoardList = () => {
     const [boardList, setBoardList] = useState([])
@@ -21,9 +22,14 @@ const BoardList = () => {
         fetchData()
     }, [])
 
-
+    const BoardCardWrap = styled.div`
+        display : flex;
+        align-items : center;
+        justify-content : flex-start;
+        flex-wrap : wrap;
+`
     return (
-        <div>
+        <BoardCardWrap>
 
             {boardList.map((c, idx) => {
                 return (
@@ -33,7 +39,7 @@ const BoardList = () => {
                     />
                 )
             })}
-        </div>
+        </BoardCardWrap>
     )
 }
 
