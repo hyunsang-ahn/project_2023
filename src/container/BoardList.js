@@ -27,6 +27,8 @@ const BoardList = () => {
         align-items : center;
         justify-content : flex-start;
         flex-wrap : wrap;
+        width : 100%;
+        gap : 3%;
 `
     return (
         <BoardCardWrap>

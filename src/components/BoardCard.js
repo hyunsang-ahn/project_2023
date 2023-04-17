@@ -7,42 +7,46 @@ import "slick-carousel/slick/slick-theme.css";
 import styled from 'styled-components';
 const BoardCard = ({ data }) => {
     console.log('data==================', data)
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        adaptiveHeight: true
-    };
-    const Wrapper = styled.div`
-    margin-top: 1rem;
-    padding: 0.5rem;
 
-    background:gray;
+    const Wrapper = styled.div`
+    margin-top: 10px;
+    padding: 10px;
+
+    background:#999999;
     color: white;
 
     text-align: center;
     font-size: 1.25rem;
     font-weight: 500;
-    max-width : 33rem;
+    max-width : 30%;
     width : 100%
   
 `;
 
     const ImgWrapDiv = styled.div`
     color: #fff;
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    max-width : 100%;
+    max-height : 200px;
 `
     const ImgWrap = styled.img`
-    width: 100%;
-    height: auto;
-    margin: 15px;
+    width : auto;
+    height : 100%;
+    max-height : 200px;
+    
 `
     return (
         <Wrapper>
 
             <ImgWrapDiv>
-                <ImgWrap src={`uploads/${_.get(data, 'uploadfiles.0.filename')}`} alt="" />
+
+                {!_.isEmpty(_.get(data, 'uploadfiles.0.filename')) ?
+                    <ImgWrap src={`uploads/${_.get(data, 'uploadfiles.0.filename')}`} alt="" />
+                    : <ImgWrap src={`https://www.shoshinsha-design.com/wp-content/uploads/2020/05/noimage-760x460.png`} alt="" />
+
+                }
             </ImgWrapDiv>
             <div>{_.get(data, 'title')}</div>
             <div>{_.get(data, 'description')}</div>
