@@ -27,7 +27,7 @@ const WriteForm = () => {
             upload_img_id = [],
             description = '',
         } = formData
-        const response = await axios.post('/custom-api/BoardWrite', { ...formData, user })
+        const response = await axios.post('/custom-api/BoardWrite', { ...formData, user_name: _.get(user, 'name'), user_email: _.get(user, 'email') })
 
         console.log('response===================', response)
         const status = _.get(response, 'status')

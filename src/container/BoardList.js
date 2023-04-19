@@ -25,10 +25,12 @@ const BoardList = () => {
     const BoardCardWrap = styled.div`
         display : flex;
         align-items : center;
-        justify-content : flex-start;
+        justify-content :center;
         flex-wrap : wrap;
         width : 100%;
         gap : 3%;
+        max-width : 1200px;
+        margin : auto
 `
     return (
         <BoardCardWrap>

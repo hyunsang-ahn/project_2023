@@ -121,7 +121,9 @@ router.post('/BoardWrite', async (req, res) => {
         console.log('req.body===============', req.body)
 
         const result = await client.db('project').collection('Board').insertOne({
-            ...req.body
+            ...req.body,
+            createdAt: new Date(),
+            updatedAt: new Date(),
 
         })
         console.log('result==========================', result)

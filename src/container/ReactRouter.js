@@ -7,6 +7,7 @@ import Login from './Login';
 import NotFound from './NotFound';
 import BoardWrite from './BoardWrite';
 import BoardList from './BoardList';
+import BoardDetail from './BoardDetail';
 
 import { getUser } from "reducers/user";
 
@@ -34,6 +35,7 @@ function ReactRouter() {
                 <Route path="/Login" element={<Login />} />
                 <Route path="/BoardWrite" element={<BoardWrite />} />
                 <Route path="/BoardList" element={<BoardList />} />
+                <Route path="/BoardDetail/:id" element={<BoardDetail />} />
 
                 <Route path="/*" element={<NotFound />} />
 
