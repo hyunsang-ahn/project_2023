@@ -19,16 +19,7 @@ const MyBlock = styled.div`
     border-radius: 2px !important;
   }
 `;
-// const IntroduceContent = styled.div`
-//   position: relative;
-//   border: 0.0625rem solid #d7e2eb;
-//   border-radius: 0.75rem;
-//   overflow: hidden;
-//   padding: 1.5rem;
-//   width: 50%;
-//   margin: 0 auto;
-//   margin-bottom: 4rem;
-// `;
+
 const Draft = ({
     register,
     setValue,

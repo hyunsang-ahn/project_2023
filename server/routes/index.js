@@ -9,7 +9,8 @@ const mongoose = require('mongoose')
 const client = require('../db')
 const crypto = require('crypto');
 const multer = require('multer');
-const _ = require('lodash')
+const _ = require('lodash');
+const { ObjectId } = require('mongodb');
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/custom-api/success',
 
@@ -185,6 +186,52 @@ router.get('/Board', async (req, res) => {
 
 });
 
+
+router.get('/getBoard', async (req, res) => {
+    try {
+        const id = _.get(req, 'query.id')
+        const result = await client.db('project').collection('Board')
+            .aggregate([
+                {
+                    $match: {
+                        _id: new ObjectId(id)
+                    }
+                },
+                {
+                    $addFields: {
+                        "upload_img_ids": {
+                            $map: {
+                                input: "$upload_img_id",
+                                as: "image_id",
+                                in: { $toObjectId: "$$image_id" }
+                            }
+                        }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "uploadfiles",
+                        localField: "upload_img_ids",
+                        foreignField: "_id",
+                        as: "uploadfiles"
+                    }
+                }
+            ]).toArray()
+        console.log('result==========================', result)
+
+        // res.send(result)
+        res.status(200).send({
+            message: "sucess",
+            result,
+        }); //send success response
+    } catch (e) {
+        res.status(500).send({
+            message: e.message,
+        }); //send error response
+    }
+
+
+});
 
 
 
