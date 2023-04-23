@@ -66,24 +66,15 @@ const BoardDetail = () => {
 
             <Wrap>
                 <Slider {...settings}>
-                    <div>
-                        <h3>1</h3>
-                    </div>
-                    <div>
-                        <h3>2</h3>
-                    </div>
-                    <div>
-                        <h3>3</h3>
-                    </div>
-                    <div>
-                        <h3>4</h3>
-                    </div>
-                    <div>
-                        <h3>5</h3>
-                    </div>
-                    <div>
-                        <h3>6</h3>
-                    </div>
+                    {_.get(board, 'uploadfiles').map((c, i) => {
+                        console.log('c========================', c)
+                        return (
+                            <div>
+                                <img src={`/uploads/${_.get(c, 'filename')}`} alt={`_.get(c, 'filename')`} />
+                            </div>
+                        )
+                    })}
+
                 </Slider>
                 <div>{_.get(board, 'title')}</div>
                 <IntroduceContent dangerouslySetInnerHTML={{ __html: _.get(board, 'description') }} />
