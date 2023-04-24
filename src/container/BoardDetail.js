@@ -23,6 +23,19 @@ const BoardDetail = () => {
         max-height : 1080px;
 
 `
+
+    const SliderWrap = styled.div`
+        padding : 20px;
+
+
+`
+
+    const ProdImage = styled.img`
+width: 100%;
+height: 100%;
+max-height : 300px;
+  object-fit: scale-down	;
+`
     const IntroduceContent = styled.div`
       position: relative;
       border: 0.0625rem solid #d7e2eb;
@@ -65,17 +78,20 @@ const BoardDetail = () => {
         return (
 
             <Wrap>
-                <Slider {...settings}>
-                    {_.get(board, 'uploadfiles').map((c, i) => {
-                        console.log('c========================', c)
-                        return (
-                            <div>
-                                <img src={`/uploads/${_.get(c, 'filename')}`} alt={`_.get(c, 'filename')`} />
-                            </div>
-                        )
-                    })}
+                <SliderWrap>
+                    <Slider {...settings}>
+                        {_.get(board, 'uploadfiles').map((c, i) => {
+                            console.log('c========================', c)
+                            return (
+                                <div>
+                                    <ProdImage src={`/uploads/${_.get(c, 'filename')}`} alt={`_.get(c, 'filename')`} />
+                                </div>
+                            )
+                        })}
 
-                </Slider>
+                    </Slider>
+                </SliderWrap>
+
                 <div>{_.get(board, 'title')}</div>
                 <IntroduceContent dangerouslySetInnerHTML={{ __html: _.get(board, 'description') }} />
 
