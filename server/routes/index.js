@@ -237,5 +237,4 @@ router.get('/getBoard', async (req, res) => {
 
 
 
-
 module.exports = router; // 모듈로 만드는 부분
