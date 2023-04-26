@@ -11,8 +11,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from "react-redux";
-
-
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import PlayerSelector from './PlayerSelector'
 
 const WriteForm = () => {
     const { register, handleSubmit, watch, formState: { errors }, setValue, getValues } = useForm();
@@ -60,6 +61,7 @@ const WriteForm = () => {
                 register={register}
                 setValue={setValue}
             />
+            <PlayerSelector />
             <ImgUploader
 
                 register={register}

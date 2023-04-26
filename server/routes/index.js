@@ -233,6 +233,52 @@ router.get('/getBoard', async (req, res) => {
 
 });
 
+router.get('/PlayerSearch', async (req, res) => {
+    try {
+        const text = _.get(req, 'query.text')
+        const result = await client.db('project').collection('fifa_player')
+            .aggregate([
+                {
+                    $match: {
+                        name: new RegExp(text)
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        id: 1,
+                        name: 1,
+                        season_id_prefix: { $toInt: { $substr: ["$id", 0, 3] } }
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "fifa_season",
+                        localField: "season_id_prefix",
+                        foreignField: "seasonId",
+                        as: "seasons"
+                    }
+                },
+                {
+                    $unwind: "$seasons"
+                },
+            ])
+            .toArray()
+        console.log('result==========================', result)
+
+        // res.send(result)
+        res.status(200).send({
+            message: "sucess",
+            result,
+        }); //send success response
+    } catch (e) {
+        res.status(500).send({
+            message: e.message,
+        }); //send error response
+    }
+
+
+});
 
 
 
