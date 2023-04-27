@@ -11,9 +11,9 @@ const PlayerSelector = () => {
 
     const searchPlayer = async () => {
         console.log('text-------------------', text)
-        const searchResult = await axios.get(`/custom-api/PlayerSearch?text=${text}`)
-        console.log('searchResult-------------------', searchResult)
-
+        const { data: { result: search_data } } = await axios.get(`/custom-api/PlayerSearch?text=${text}`)
+        console.log('search_data-------------------', search_data)
+        setSearchData(search_data)
     }
     return (
         <Popup
@@ -31,7 +31,26 @@ const PlayerSelector = () => {
                     <button type='button' onClick={searchPlayer} >검색하기</button>
                     {!_.isEmpty(searchData) &&
 
-                        <div>데이터가 나와벌임!</div>
+                        searchData.map((c) => {
+                            return (
+                                <div>
+                                    <span>{_.get(c, 'name')}</span>
+                                    <span><img src={_.get(c, 'seasons.seasonImg')} alt='seasonImg' /></span>
+                                    <span>
+                                        <img
+                                            src={`/playersAction/p${_.get(c, 'id')}.png`}
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = `/players/p${_.get(c, 'id')}.png`;
+                                            }}
+                                            alt='player'
+                                        />
+
+                                    </span>
+
+                                </div>
+                            )
+                        })
                     }
                 </div>
             )}

@@ -248,7 +248,9 @@ router.get('/PlayerSearch', async (req, res) => {
                         _id: 0,
                         id: 1,
                         name: 1,
-                        season_id_prefix: { $toInt: { $substr: ["$id", 0, 3] } }
+                        season_id_prefix: { $toInt: { $substr: ["$id", 0, 3] } },
+                        // player_id_prefix: { $toInt: { $substr: ["$id", 3, 8] } }
+
                     }
                 },
                 {

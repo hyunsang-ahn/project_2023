@@ -23,11 +23,16 @@ console.log('rootDirectory=================', rootDirectory.replace('\\server', 
 
 // uploads 폴더의 경로를 구합니다.
 const uploadDirectory = path.join(rootDirectory.replace('\\server', ''), 'uploads');
-console.log('uploadDirectory=================', uploadDirectory)
+const playersDirectory = path.join(rootDirectory.replace('\\server', ''), 'players');
+const playersActionDirectory = path.join(rootDirectory.replace('\\server', ''), 'playersAction');
+
 // /uploads 경로로 접근 가능하도록 설정합니다.
 app.use('/uploads', express.static(uploadDirectory));
 
-
+// /players 경로로 접근 가능하도록 설정합니다.
+app.use('/players', express.static(playersDirectory));
+// /playersAction 경로로 접근 가능하도록 설정합니다.
+app.use('/playersAction', express.static(playersActionDirectory));
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
