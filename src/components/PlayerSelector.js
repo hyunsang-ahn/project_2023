@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 
-const PlayerSelector = () => {
+const PlayerSelector = ({ register }) => {
     const [text, setText] = useState('')
     const [searchData, setSearchData] = useState([])
 
@@ -32,8 +32,10 @@ const PlayerSelector = () => {
                     {!_.isEmpty(searchData) &&
 
                         searchData.map((c) => {
+                            console.log('c==========================', c)
                             return (
                                 <div>
+                                    <input type='radio' name='player' {...register("player")} />
                                     <span>{_.get(c, 'name')}</span>
                                     <span><img src={_.get(c, 'seasons.seasonImg')} alt='seasonImg' /></span>
                                     <span>
@@ -41,11 +43,24 @@ const PlayerSelector = () => {
                                             src={`/playersAction/p${_.get(c, 'id')}.png`}
                                             onError={(e) => {
                                                 e.target.onerror = null;
-                                                e.target.src = `/players/p${_.get(c, 'id')}.png`;
+                                                const playerPrefix = _.get(c, 'player_id_prefix');
+                                                const defaultImageSrc = `/players/not_found.png`;
+
+                                                // 이미지가 존재하지 않는 경우
+
+                                                const img = new Image();
+                                                img.onload = () => {
+                                                    e.target.src = img.src;
+                                                };
+                                                img.onerror = () => {
+                                                    e.target.src = defaultImageSrc;
+                                                };
+                                                img.src = `/players/p${playerPrefix}.png`;
+
+
                                             }}
                                             alt='player'
                                         />
-
                                     </span>
 
                                 </div>

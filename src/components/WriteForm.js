@@ -61,7 +61,7 @@ const WriteForm = () => {
                 register={register}
                 setValue={setValue}
             />
-            <PlayerSelector />
+            <PlayerSelector register={register} />
             <ImgUploader
 
                 register={register}
